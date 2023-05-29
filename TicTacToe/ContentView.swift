@@ -27,7 +27,7 @@ struct ContentView: View {
             }
         }
         .background(Color.blue)
-        .allowsHitTesting(viewModel.isWinnerFound ? false : true)
+        .allowsHitTesting(viewModel.isWinnerFound ? false : viewModel.isGameDraw ? false : true)
         VStack {
             Text("Player \(viewModel.turn.rawValue) has won")
                 .opacity(viewModel.isWinnerFound ? 1 : 0).padding(10)
