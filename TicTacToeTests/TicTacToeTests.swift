@@ -9,28 +9,25 @@ import XCTest
 @testable import TicTacToe
 
 final class TicTacToeTests: XCTestCase {
+    var gameViewModel = GameViewModel()
+
+    func testBoardSetup() {
+        XCTAssertNotNil(gameViewModel)
+        gameViewModel.setBoard()
+
+        XCTAssertEqual(gameViewModel.cells.count, 3) // total rows
+        XCTAssertEqual(gameViewModel.cells[0].count , 3) // first row
+        XCTAssertEqual(gameViewModel.cells[1].count , 3) // second row
+        XCTAssertEqual(gameViewModel.cells[2].count , 3) // third row
+    }
 
     override func setUpWithError() throws {
+        gameViewModel = GameViewModel()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
 
 }
