@@ -28,12 +28,16 @@ struct ContentView: View {
         }
         .background(Color.blue)
         .allowsHitTesting(viewModel.isWinnerFound ? false : true)
-
-        Text("Player \(viewModel.turn.rawValue) has won").opacity(viewModel.isWinnerFound ? 1 : 0).padding(10)
-        Button("Restart") {
-            viewModel.isWinnerFound = false
-            viewModel.setBoard()
-        }.opacity(viewModel.isWinnerFound ? 1 : 0)
+        VStack {
+            Text("Player \(viewModel.turn.rawValue) has won")
+                .opacity(viewModel.isWinnerFound ? 1 : 0).padding(10)
+            Text("Game draw").opacity(viewModel.isGameDraw ? 1 : 0)
+                .opacity(viewModel.isGameDraw ? 1 : 0).padding(10)
+            Button("Restart") {
+                viewModel.setBoard()
+            }.opacity(viewModel.isWinnerFound ? 1 : viewModel.isGameDraw ? 1 : 0)
+        }
+        .padding(5)
     }
 }
 

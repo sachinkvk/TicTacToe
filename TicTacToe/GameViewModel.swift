@@ -21,6 +21,9 @@ class GameViewModel: ObservableObject {
     @Published var cells = [[Cell]]()
     @Published var turn = CellState.cross
     @Published var isWinnerFound = false
+    @Published var moveNumber = 0
+    private let totalCells = 9
+    @Published var isGameDraw = false
 
     init() {
         setBoard()
@@ -37,6 +40,9 @@ class GameViewModel: ObservableObject {
         }
         cells = newCells
         turn = CellState.cross
+        isWinnerFound = false
+        isGameDraw = false
+        moveNumber = 0
     }
 
     func getCell(for _row: Int, _col: Int) -> String {
@@ -59,8 +65,14 @@ class GameViewModel: ObservableObject {
 
         if checkWinningCombination() {
             isWinnerFound = true
+            return
         } else {
             turn = turn == .cross ? .nought : .cross
+        }
+        
+        moveNumber += 1
+        if moveNumber == totalCells && !isWinnerFound {
+            isGameDraw = true
         }
     }
 

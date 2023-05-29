@@ -67,6 +67,16 @@ final class TicTacToeTests: XCTestCase {
         gameViewModel.cells[2][1].value = .cross
         gameViewModel.cells[2][2].value = .cross
         XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[0][0].value = .cross
+        gameViewModel.cells[1][1].value = .cross
+        gameViewModel.cells[2][2].value = .cross
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[0][2].value = .cross
+        gameViewModel.cells[1][1].value = .cross
+        gameViewModel.cells[2][0].value = .cross
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
     }
 
     func testNoughtWinningCombination() {
@@ -87,6 +97,34 @@ final class TicTacToeTests: XCTestCase {
         gameViewModel.cells[2][1].value = .nought
         gameViewModel.cells[2][2].value = .nought
         XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[0][0].value = .nought
+        gameViewModel.cells[1][1].value = .nought
+        gameViewModel.cells[2][2].value = .nought
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[0][2].value = .nought
+        gameViewModel.cells[1][1].value = .nought
+        gameViewModel.cells[2][0].value = .nought
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+    }
+
+    func testGameDraw() {
+        gameViewModel.setBoard()
+
+        gameViewModel.setCell(state: .cross, row: 0, col: 0)
+        gameViewModel.setCell(state: .cross, row: 0, col: 2)
+        gameViewModel.setCell(state: .nought, row: 2, col: 0)
+
+        gameViewModel.setCell(state: .nought, row: 1, col: 0)
+        gameViewModel.setCell(state: .cross, row: 1, col: 1)
+        gameViewModel.setCell(state: .nought, row: 0, col: 1)
+
+        gameViewModel.setCell(state: .cross, row: 2, col: 1)
+        gameViewModel.setCell(state: .nought, row: 2, col: 2)
+        gameViewModel.setCell(state: .cross, row: 1, col: 2)
+
+        XCTAssertTrue(gameViewModel.isGameDraw)
     }
 
     override func tearDownWithError() throws {
