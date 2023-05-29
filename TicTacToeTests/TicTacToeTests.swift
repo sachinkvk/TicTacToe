@@ -31,6 +31,8 @@ final class TicTacToeTests: XCTestCase {
 
         XCTAssertEqual(gameViewModel.turn, .cross)
 
+        XCTAssertEqual(gameViewModel.getCell(for: 1, _col: 0), "")
+
         gameViewModel.setCell(state: .cross, row: 1, col: 0)
         XCTAssertEqual(gameViewModel.getCell(for: 1, _col: 0), "X")
 
@@ -41,6 +43,50 @@ final class TicTacToeTests: XCTestCase {
 
         XCTAssertEqual(gameViewModel.turn, .cross)
 
+    }
+
+    func testCrossWinningCombination() {
+        gameViewModel.setBoard()
+
+        gameViewModel.cells[0][0].value = .cross
+        gameViewModel.cells[0][1].value = .cross
+        gameViewModel.cells[0][2].value = .cross
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[0][0].value = .nought
+        gameViewModel.cells[0][1].value = .cross
+        gameViewModel.cells[0][2].value = .nought
+        XCTAssertFalse(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[1][0].value = .cross
+        gameViewModel.cells[1][1].value = .cross
+        gameViewModel.cells[1][2].value = .cross
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[2][0].value = .cross
+        gameViewModel.cells[2][1].value = .cross
+        gameViewModel.cells[2][2].value = .cross
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+    }
+
+    func testNoughtWinningCombination() {
+        gameViewModel.setBoard()
+        gameViewModel.turn = .nought
+        gameViewModel.cells[0][0].value = .nought
+        gameViewModel.cells[0][1].value = .nought
+        gameViewModel.cells[0][2].value = .nought
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.cells[1][0].value = .nought
+        gameViewModel.cells[1][1].value = .nought
+        gameViewModel.cells[1][2].value = .nought
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
+
+        gameViewModel.turn = .nought
+        gameViewModel.cells[2][0].value = .nought
+        gameViewModel.cells[2][1].value = .nought
+        gameViewModel.cells[2][2].value = .nought
+        XCTAssertTrue(gameViewModel.checkWinningCombination())
     }
 
     override func tearDownWithError() throws {

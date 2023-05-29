@@ -20,6 +20,7 @@ struct Cell {
 class GameViewModel: ObservableObject {
     @Published var cells = [[Cell]]()
     @Published var turn = CellState.cross
+    @Published var isWinnerFound = false
 
     init() {
         setBoard()
@@ -35,6 +36,7 @@ class GameViewModel: ObservableObject {
             newCells.append(row)
         }
         cells = newCells
+        turn = CellState.cross
     }
 
     func getCell(for _row: Int, _col: Int) -> String {
@@ -54,7 +56,49 @@ class GameViewModel: ObservableObject {
         if !cells[row][col].value.rawValue.isEmpty { return }
 
         cells[row][col].value = turn == .cross ? .cross : (turn == .nought ? .nought : .empty)
-        turn = turn == .cross ? .nought : .cross
+
+        if checkWinningCombination() {
+            isWinnerFound = true
+        } else {
+            turn = turn == .cross ? .nought : .cross
+        }
+    }
+
+    func checkWinningCombination() -> Bool {
+
+        //vertical
+        if (cells[0][0].value == turn) && (cells[1][0].value == turn) && (cells[2][0].value == turn) {
+            return true
+        }
+
+        if (cells[0][1].value == turn) && (cells[1][1].value == turn) && (cells[2][1].value == turn) {
+            return true
+        }
+
+        if (cells[0][2].value == turn) && (cells[1][2].value == turn) && (cells[2][2].value == turn) {
+            return true
+        }
+
+        //horizontal
+        if (cells[0][0].value == turn) && (cells[0][1].value == turn) && (cells[0][2].value == turn) {
+            return true
+        }
+        if (cells[1][0].value == turn) && (cells[1][1].value == turn) && (cells[1][2].value == turn) {
+            return true
+        }
+        if (cells[2][0].value == turn) && (cells[2][1].value == turn) && (cells[2][2].value == turn) {
+            return true
+        }
+
+        // diagonal
+        if (cells[0][0].value == turn) && (cells[1][1].value == turn) && (cells[2][2].value == turn) {
+            return true
+        }
+        if (cells[0][2].value == turn) && (cells[1][1].value == turn) && (cells[2][0].value == turn) {
+            return true
+        }
+
+        return false
     }
 
 }
