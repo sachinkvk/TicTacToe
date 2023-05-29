@@ -11,6 +11,10 @@ import XCTest
 final class TicTacToeTests: XCTestCase {
     var gameViewModel = GameViewModel()
 
+    override func setUpWithError() throws {
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+
     func testBoardSetup() {
         XCTAssertNotNil(gameViewModel)
         gameViewModel.setBoard()
@@ -21,9 +25,22 @@ final class TicTacToeTests: XCTestCase {
         XCTAssertEqual(gameViewModel.cells[2].count , 3) // third row
     }
 
-    override func setUpWithError() throws {
-        gameViewModel = GameViewModel()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testPlayersMove() {
+
+        gameViewModel.setBoard()
+
+        XCTAssertEqual(gameViewModel.turn, .cross)
+
+        gameViewModel.setCell(state: .cross, row: 1, col: 0)
+        XCTAssertEqual(gameViewModel.getCell(for: 1, _col: 0), "X")
+
+        XCTAssertEqual(gameViewModel.turn, .nought)
+
+        gameViewModel.setCell(state: .nought, row: 1, col: 1)
+        XCTAssertEqual(gameViewModel.getCell(for: 1, _col: 1), "O")
+
+        XCTAssertEqual(gameViewModel.turn, .cross)
+
     }
 
     override func tearDownWithError() throws {
