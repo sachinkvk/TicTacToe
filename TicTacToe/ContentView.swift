@@ -31,8 +31,10 @@ struct ContentView: View {
         VStack {
             Text("Player \(viewModel.turn.rawValue) has won")
                 .opacity(viewModel.isWinnerFound ? 1 : 0).padding(10)
-            Text("Game draw").opacity(viewModel.isGameDraw ? 1 : 0)
+
+            Text("Game draw")
                 .opacity(viewModel.isGameDraw ? 1 : 0).padding(10)
+
             Button("Restart") {
                 viewModel.setBoard()
             }.opacity(viewModel.isWinnerFound ? 1 : viewModel.isGameDraw ? 1 : 0)
